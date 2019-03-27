@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -22,25 +24,21 @@ public class GuestBook implements MouseListener {
 	// Guest #3: Greg Ganders
 	// Guest #4: Donny Doners
 	JFrame frame = new JFrame();
+	JFrame frame2 = new JFrame();
 	JPanel panel = new JPanel();
 	JButton add = new JButton();
 	JButton view = new JButton();
+	JPanel panel2 = new JPanel();
+	JTextArea text = new JTextArea(20, 15);
 	ArrayList<String> arr = new ArrayList<String>();
+	String allGuests = "";
 
 	public static void main(String[] args) {
 		GuestBook gb = new GuestBook();
-		// gb.start();
-		gb.GUI();
+		gb.startGUI();
 	}
 
-	// void start() {
-	// arr.add("Guest #1: Bob Banders");
-	// arr.add("Guest #2: Sandy Summers");
-	// arr.add("Guest #3: Greg Ganders");
-	// arr.add("Guest #4: Donny Doners");
-	// }
-
-	void GUI() {
+	void startGUI() {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
@@ -50,6 +48,7 @@ public class GuestBook implements MouseListener {
 		view.setText("View Guests");
 		view.addMouseListener(this);
 		panel.add(view);
+		panel.add(text);
 		frame.pack();
 	}
 
@@ -62,9 +61,14 @@ public class GuestBook implements MouseListener {
 			arr.add("Guest #" + nextNum + ": " + entered);
 		}
 		if (e.getSource() == view) {
-			for (String s : arr) {
-				JOptionPane.showMessageDialog(null, s);
-				// textArea
+			if (arr.isEmpty()) {
+				text.setText("No guests yet.");
+			}
+			for (int i = 0; i < arr.size(); i++) {
+				String s = arr.get(i);
+				allGuests = allGuests + s + "\n";
+				text.setText(allGuests);
+				frame.pack();
 			}
 		}
 	}
